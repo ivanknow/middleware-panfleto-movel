@@ -1,14 +1,18 @@
 package br.ufrpe.bcc.middleware;
 
+import java.math.BigDecimal;
+
 public class Panfleto {
 	private String titulo;
 	private String texto;
 	private String link;
+	private BigDecimal preco;
 	
-	public Panfleto(String titulo, String texto, String link) {
+	public Panfleto(String titulo, String texto, String link, BigDecimal preco) {
 		this.titulo = titulo;
 		this.texto = texto;
 		this.link = link;
+		this.preco = preco;
 	}
 
 	public String getTitulo() {
@@ -34,4 +38,13 @@ public class Panfleto {
 	public void setLink(String link) {
 		this.link = link;
 	}
+	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
 }

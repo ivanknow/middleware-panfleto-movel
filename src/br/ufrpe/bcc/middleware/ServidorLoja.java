@@ -37,20 +37,14 @@ public class ServidorLoja implements IServidorLoja{
 	}
 
 	@Override
-	public Panfleto RetornarPanfleto() {
+	public List<Panfleto> RetornarPanfletos() {
 		//duvida
-		return null;
+		return this.panfletos;
 	}
 
 	@Override
-	public boolean AtualizarPanfleto(Panfleto panfleto, String titulo, String texto, String link) {
-		int index = panfletos.indexOf(panfleto);
-		panfleto.setTitulo(titulo);
-		panfleto.setTexto(texto);
-		panfleto.setLink(link);
-		
-		panfletos.set(index, panfleto);
+	public boolean AtualizarPanfleto(List<Panfleto> panfletos) {
+		this.panfletos = panfletos;
 		return true;
 	}
-
 }
