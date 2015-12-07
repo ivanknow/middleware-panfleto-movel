@@ -1,8 +1,8 @@
-package br.ufrpe.bc.middleware.interfaces;
+package br.ufrpe.bcc.middleware.interfaces;
 
 import java.util.List;
 
-import br.ufrpe.bcc.middleware.Panfleto;;
+import br.ufrpe.bcc.negocio.Panfleto;;
 
 public interface IServidorLoja {
 	boolean LoginServidor(String login, String senha, String ip, String port);

@@ -1,4 +1,4 @@
-package br.ufrpe.bcc.middleware;
+package br.ufrpe.bcc.negocio;
 
 public class Endereco {
 	private String ip;

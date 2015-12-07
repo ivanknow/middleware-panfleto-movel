@@ -1,9 +1,9 @@
-package br.ufrpe.bcc.middleware;
+package br.ufrpe.bcc.negocio;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.ufrpe.bc.middleware.interfaces.IServidorLoja;
+import br.ufrpe.bcc.middleware.interfaces.IServidorLoja;
 
 public class ServidorLoja implements IServidorLoja{
 	
