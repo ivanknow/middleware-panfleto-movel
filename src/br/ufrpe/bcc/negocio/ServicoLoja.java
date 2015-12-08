@@ -2,13 +2,14 @@ package br.ufrpe.bcc.negocio;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
-public class RegistroLoja implements Serializable{
+public class ServicoLoja implements Serializable{
 	
 	private static final long serialVersionUID = -2734963953080470754L;
 	private String ip;
 	private String porta;
-	private String identificador;
+	private UUID identificador;
 	private String nomeServico;
 	private int requisicoes;
 	private String login;
@@ -16,7 +17,7 @@ public class RegistroLoja implements Serializable{
 	private boolean ativo = true;
 	private List<Oferta> ofertas; 
 	
-	public RegistroLoja(String ip, String porta) {
+	public ServicoLoja(String ip, String porta) {
 		super();
 		this.ip = ip;
 		this.porta = porta;
@@ -34,10 +35,10 @@ public class RegistroLoja implements Serializable{
 	public void setPorta(String porta) {
 		this.porta = porta;
 	}
-	public String getIdentificador() {
+	public UUID getIdentificador() {
 		return identificador;
 	}
-	public void setIdentificador(String identificador) {
+	public void setIdentificador(UUID identificador) {
 		this.identificador = identificador;
 	}
 	public String getNomeServico() {

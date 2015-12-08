@@ -1,47 +1,48 @@
 package br.ufrpe.bcc.negocio;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 public class ServidorNomes {
 
-	Map<String, List<RegistroLoja>> servicos;
+	Map<String, ServicoLoja> servicos;
 	
-	public ServidorNomes() {
-		servicos = new HashMap<String, List<RegistroLoja>>();
-	}
-
 	private static final String loginMaster = "ADM";
 	private static final String senhaMaster = "1234";
 
-	public boolean CadastrarServicoLoja(RegistroLoja servico) {
+	public synchronized void CadastrarServicoLoja(ServicoLoja servico) {
 
 		if (servicos.containsKey(servico.getNomeServico())) {
 
-			List<RegistroLoja> listaServico = servicos.get(servico.getNomeServico());
-			servico.setIdentificador("" + listaServico.size() + 1 + "");
-
-			listaServico.add(servico);
-			return true;
+			System.out.println("Serviço já cadastrado!");
+			
 		} else {
-			return false;
+			
+			UUID id = UUID.randomUUID();
+			servico.setIdentificador(id);
+			servicos.put(servico.getNomeServico(), servico);
+			
 		}
 
 	}
 
-	public void atualizarOfertas(String login, String senha,
-			List<Oferta> ofertas) {
-		// TODO atualiza o cadastro de ofertas da loja
+	public void atualizarOfertas(String login, String senha, String nomeServico, List<Oferta> ofertas) {
+		
+		if (servicos.containsKey(nomeServico)) {
+			ServicoLoja servico = servicos.get(nomeServico);
+			if (servico.getLogin().equalsIgnoreCase(login) && servico.getSenha().equalsIgnoreCase(senha)) {
+				servico.setOfertas(ofertas);
+			}
+		}	
 	}
 
 	private boolean autenticar(String login, String senha, String ip, String porta) {
 
-		RegistroLoja obj = new RegistroLoja(ip, porta);
+		ServicoLoja obj = new ServicoLoja(ip, porta);
 
-		if (login.equalsIgnoreCase(obj.getLogin())
-				&& senha.equals(obj.getSenha())) {
+		if (login.equalsIgnoreCase(obj.getLogin())&& senha.equals(obj.getSenha())) {
 			return true;
 		} else {
 			return false;
@@ -51,7 +52,7 @@ public class ServidorNomes {
 
 	public void ativarDesativarLoja(String login, String senha, String ip, String porta, boolean ativarDesativar) {
 
-		RegistroLoja servicoLoja = new RegistroLoja(ip, porta);
+		ServicoLoja servicoLoja = new ServicoLoja(ip, porta);
 		if (servicos.get(servicoLoja.getLogin()).equals(login) && servicos.get(servicoLoja.getSenha()).equals(senha)){
 			servicoLoja.setAtivo(ativarDesativar);
 		}
