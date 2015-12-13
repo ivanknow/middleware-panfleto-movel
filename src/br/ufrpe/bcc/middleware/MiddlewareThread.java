@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import org.json.simple.parser.ParseException;
+
+import java.util.Map;
 
 public abstract class MiddlewareThread implements Runnable {
 	Socket s;
@@ -22,6 +25,9 @@ public abstract class MiddlewareThread implements Runnable {
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -32,7 +38,7 @@ public abstract class MiddlewareThread implements Runnable {
 
 	}
 
-	public abstract String exec(String m);
+	public abstract String exec(String m) throws ParseException;
 
 	private String recieve() throws IOException, ClassNotFoundException {
 		ObjectInputStream inFromClient;
