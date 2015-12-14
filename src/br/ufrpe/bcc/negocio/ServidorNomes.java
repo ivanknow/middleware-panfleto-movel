@@ -1,12 +1,13 @@
 package br.ufrpe.bcc.negocio;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
 public class ServidorNomes {
 
-	Map<String, ServicoLoja> servicos;
+	Map<String, ServicoLoja> servicos = new HashMap<String, ServicoLoja>();
 	
 	//ServicoLoja servico;
 	
@@ -26,7 +27,7 @@ public class ServidorNomes {
 			UUID id = UUID.randomUUID();
 			servico.setIdentificador(id);
 			servicos.put(servico.getNomeServico(), servico);
-			
+			System.out.println(servicos);
 			return "Serviço cadastrado com sucesso";
 		}
 
@@ -56,8 +57,6 @@ public class ServidorNomes {
 	}
 	
 	public synchronized ServicoLoja retornarLoja(String nomeServico){
-		
-		String ipPorta = "";
 		
 		if (servicos.containsKey(nomeServico)) {
 			

@@ -20,6 +20,8 @@ public class ServerNomeRun {
 	static ServidorNomes sn = new ServidorNomes();
 	public static void run(String host,String port) throws Exception{
 		
+		System.out.println("Rodou o servidor");
+		
 		Comm m = new Comm(new Endereco(host, port));
 
 		while (true) {
@@ -42,7 +44,7 @@ public class ServerNomeRun {
 						sl.setNomeServico((String)data.get("nomeServico"));
 						sl.setIp((String)data.get("ip"));
 						sl.setPorta((String)data.get("porta"));
-						sl.setIdentificador((UUID)data.get("identificador"));
+						//sl.setIdentificador((UUID)data.get("identificador"));
 						sl.setLogin((String)data.get("login"));
 						sl.setSenha((String)data.get("senha"));
 						valor = sn.cadastrarServicoLoja(sl);
@@ -79,7 +81,7 @@ public class ServerNomeRun {
 					JSONObject response = new JSONObject();
 					response.put("result",valor);
 					
-					String mOut = new String();
+					String mOut = response.toJSONString();
 					
 					return mOut;
 				}

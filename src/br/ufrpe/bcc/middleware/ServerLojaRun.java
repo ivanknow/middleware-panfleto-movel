@@ -2,6 +2,7 @@ package br.ufrpe.bcc.middleware;
 
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
@@ -27,11 +28,20 @@ public class ServerLojaRun {
 		Comm mCliente = new Comm(new Endereco("localhost", "5000"));
 		Comm mServidor = new Comm(rs);
 
-		String reqMsg = new String();
+		JSONObject response = new JSONObject();
+		response.put("op","cadastrarLoja");
+		JSONObject data = new JSONObject();
+		data.put("ip","localhost");
+		data.put("porta", "5001");
+		//data.put("identificador","");
+		data.put("nomeServico","cea");
+		data.put("login","cea");
+		data.put("senha","1234");
+		response.put("data",data);
 
 		//passa valores no json
 
-		mCliente.requestAndReceive(reqMsg);
+		mCliente.requestAndReceive(response.toJSONString());
 
 		while (true) {
 			MiddlewareThread thread = new MiddlewareThread(mServidor.receiveThread()) {
