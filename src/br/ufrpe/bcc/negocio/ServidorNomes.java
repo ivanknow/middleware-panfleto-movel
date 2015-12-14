@@ -12,11 +12,13 @@ public class ServidorNomes {
 	private static final String loginMaster = "ADM";
 	private static final String senhaMaster = "1234";
 
-	public synchronized void CadastrarServicoLoja(ServicoLoja servico) {
+	public synchronized String cadastrarServicoLoja(ServicoLoja servico) {
 
 		if (servicos.containsKey(servico.getNomeServico())) {
 
 			System.out.println("Serviço já cadastrado!");
+			
+			return "Serviço já existente";
 			
 		} else {
 			
@@ -24,23 +26,38 @@ public class ServidorNomes {
 			servico.setIdentificador(id);
 			servicos.put(servico.getNomeServico(), servico);
 			
+			return "Serviço cadastrado com sucesso";
 		}
 
 	}
-
-	public void atualizarOfertas(String login, String senha, String nomeServico, List<Oferta> ofertas) {
+	
+	
+	public synchronized String apagarServicoLoja(ServicoLoja servico){
 		
-		if (servicos.containsKey(nomeServico)) {
-			ServicoLoja servico = servicos.get(nomeServico);
-			if (servico.getLogin().equalsIgnoreCase(login) && servico.getSenha().equalsIgnoreCase(senha)) {
-				servico.setOfertas(ofertas);
-			}
-		}	
+		if (servicos.containsKey(servico.getNomeServico())) {
+			servicos.remove(servico);
+			
+			return "Serviço Removido";
+		}
+		return null;
 	}
+	
+	
+	public synchronized String atualizarServicoLoja(ServicoLoja servico){
+		
+		if (servicos.containsKey(servico.getNomeServico())) {
+			servicos.replace(servico.getNomeServico(), servico);
+			
+			return "Serviço Atualizado";
+		}
+		return null;
+		
+	}
+
 
 	private boolean autenticar(String login, String senha, String ip, String porta) {
 
-		ServicoLoja obj = new ServicoLoja(ip, porta);
+		ServicoLoja obj = new ServicoLoja();
 
 		if (login.equalsIgnoreCase(obj.getLogin())&& senha.equals(obj.getSenha())) {
 			return true;
@@ -52,7 +69,7 @@ public class ServidorNomes {
 
 	public void ativarDesativarLoja(String login, String senha, String ip, String porta, boolean ativarDesativar) {
 
-		ServicoLoja servicoLoja = new ServicoLoja(ip, porta);
+		ServicoLoja servicoLoja = new ServicoLoja();
 		if (servicos.get(servicoLoja.getLogin()).equals(login) && servicos.get(servicoLoja.getSenha()).equals(senha)){
 			servicoLoja.setAtivo(ativarDesativar);
 		}
@@ -67,5 +84,18 @@ public class ServidorNomes {
 		}
 		return nomes.toString();
 	}
+	
+	
+//	public boolean atualizarOfertas(String login, String senha, String nomeServico, List<Oferta> ofertas) {
+//	
+//	if (servicos.containsKey(nomeServico)) {
+//		ServicoLoja servico = servicos.get(nomeServico);
+//		if (servico.getLogin().equalsIgnoreCase(login) && servico.getSenha().equalsIgnoreCase(senha)) {
+//			servico.setOfertas(ofertas);
+//		}
+//		return true;
+//	}
+//	return false;
+//}
 
 }

@@ -17,12 +17,12 @@ public class ServicoLoja implements Serializable{
 	private boolean ativo = true;
 	private List<Oferta> ofertas; 
 	
-	public ServicoLoja(String ip, String porta) {
-		super();
-		this.ip = ip;
-		this.porta = porta;
+//	public ServicoLoja(String ip, String porta) {
+//		super();
+//		this.ip = ip;
+//		this.porta = porta;
 	
-	}
+//	}
 	public String getIp() {
 		return ip;
 	}

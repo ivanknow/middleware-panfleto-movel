@@ -47,4 +47,6 @@ public class ServidorLoja implements IServidorLoja{
 		this.panfletos = panfletos;
 		return true;
 	}
+
+	
 }
