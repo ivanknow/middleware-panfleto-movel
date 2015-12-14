@@ -1,8 +1,10 @@
 package br.ufrpe.bcc.middleware;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -71,7 +73,16 @@ public class ServerNomeRun {
 						break;
 					case "retornarNomesServicos":
 						
-						valor = sn.nomesServicos();
+						JSONArray jsonArray = new JSONArray();
+						
+						List<String> nomes = sn.nomesServicos();
+						for (int i = 0; i < nomes.size(); i++) {
+							JSONObject obj = new JSONObject();
+							obj.put("nome", nomes.get(i));
+							jsonArray.add(obj);
+						}
+						
+						valor = jsonArray.toJSONString();
 						break;
 					default:
 						valor = "operacao desconhecida";

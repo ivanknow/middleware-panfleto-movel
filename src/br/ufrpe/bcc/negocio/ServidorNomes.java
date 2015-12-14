@@ -1,6 +1,8 @@
 package br.ufrpe.bcc.negocio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -91,13 +93,13 @@ public class ServidorNomes {
 	
 	
 
-	public synchronized String nomesServicos() {
-		StringBuilder nomes = new StringBuilder();
+	public synchronized List<String> nomesServicos() {
+		List<String> nomes = new ArrayList<String>();
 		Set<String> set = servicos.keySet();
 		for (String s : set) {
-			nomes.append("(" + s + ")");
+			nomes.add(s);
 		}
-		return nomes.toString();
+		return nomes;
 	}
 	
 	

@@ -33,5 +33,7 @@ public class ClientLoja {
 
 		String m = mCliente.requestAndReceive(response.toJSONString());
 		System.out.println(m);
+		
+		
 	}
 }
