@@ -1,7 +1,7 @@
 package br.ufrpe.bcc.middleware;
 
-import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -39,21 +39,32 @@ public class ServerNomeRun {
 					switch (op) {
 					case "cadastrarLoja":
 						
+						sl.setNomeServico((String)data.get("nomeServico"));
 						sl.setIp((String)data.get("ip"));
+						sl.setPorta((String)data.get("porta"));
+						sl.setIdentificador((UUID)data.get("identificador"));
+						sl.setLogin((String)data.get("login"));
+						sl.setSenha((String)data.get("senha"));
 						valor = sn.cadastrarServicoLoja(sl);
 						break;
 						
 					case "apagarLoja":
 						
-						sl.setIp((String)data.get("ip"));
+						sl.setNomeServico((String)data.get("nomeServico"));
 						valor = sn.apagarServicoLoja(sl);
 						break;
 						
 					case "atualizarLoja":	
 						
-						sl.setIp((String)data.get("ip"));
+						sl.setNomeServico((String)data.get("nomeServico"));
 						valor = sn.atualizarServicoLoja(sl);
 						break;
+						
+					case "retornarLoja":
+						
+						ServicoLoja loja = sn.retornarLoja((String)data.get("nomeServico"));
+						
+						valor = "{\"ip\":\""+loja.getIp()+"\",\"porta\":\""+loja.getPorta()+"\"}";
 						
 					case "retornarNomesServicos":
 						

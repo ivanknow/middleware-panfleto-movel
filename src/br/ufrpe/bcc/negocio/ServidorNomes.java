@@ -1,6 +1,5 @@
 package br.ufrpe.bcc.negocio;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -8,6 +7,8 @@ import java.util.UUID;
 public class ServidorNomes {
 
 	Map<String, ServicoLoja> servicos;
+	
+	//ServicoLoja servico;
 	
 	private static final String loginMaster = "ADM";
 	private static final String senhaMaster = "1234";
@@ -53,6 +54,19 @@ public class ServidorNomes {
 		return null;
 		
 	}
+	
+	public synchronized ServicoLoja retornarLoja(String nomeServico){
+		
+		String ipPorta = "";
+		
+		if (servicos.containsKey(nomeServico)) {
+			
+			ServicoLoja servico = servicos.get(nomeServico);
+			
+			return servico;
+		}
+		return null;
+	}
 
 
 	private boolean autenticar(String login, String senha, String ip, String porta) {
@@ -75,6 +89,8 @@ public class ServidorNomes {
 		}
 
 	}
+	
+	
 
 	public synchronized String nomesServicos() {
 		StringBuilder nomes = new StringBuilder();
