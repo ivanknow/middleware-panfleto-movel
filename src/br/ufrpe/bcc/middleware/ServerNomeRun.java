@@ -29,6 +29,7 @@ public class ServerNomeRun {
 				
 				@Override
 				public String exec(String mIn) throws ParseException {
+					System.out.println(mIn);
 					//pegando entrada
 					JSONParser parser = new JSONParser();
 					Map json = (Map)parser.parse(mIn, new JsonConteiner());
@@ -67,13 +68,14 @@ public class ServerNomeRun {
 						ServicoLoja loja = sn.retornarLoja((String)data.get("nomeServico"));
 						
 						valor = "{\"ip\":\""+loja.getIp()+"\",\"porta\":\""+loja.getPorta()+"\"}";
-						
+						break;
 					case "retornarNomesServicos":
 						
 						valor = sn.nomesServicos();
-						
+						break;
 					default:
 						valor = "operacao desconhecida";
+						break;
 					}
 					
 					//preparando saida
