@@ -1,13 +1,16 @@
 package br.ufrpe.bcc.middleware;
 
+import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import br.ufrpe.bcc.middleware.json.JsonConteiner;
 import br.ufrpe.bcc.negocio.Endereco;
+import br.ufrpe.bcc.negocio.Panfleto;
 import br.ufrpe.bcc.negocio.ServidorLoja;
 import br.ufrpe.bcc.negocio.ServidorNomes;
 
@@ -47,21 +50,62 @@ public class ServerLojaRun {
 			MiddlewareThread thread = new MiddlewareThread(mServidor.receiveThread()) {
 
 				@Override
-				public String exec(String m) {
-					String mOut = new String();
+				public String exec(String m) throws ParseException{
+					
 					JSONParser parser = new JSONParser();
-					try {
+					
 						Map json = (Map)parser.parse(m, new JsonConteiner());
 						String op = (String) json.get("op");
 						System.out.println();
 						
-					} catch (ParseException e) {
+						ServidorLoja sl = new ServidorLoja();
 						
-						e.printStackTrace();
-					}
-					ServidorLoja servico = new ServidorLoja();
+						String valor = "";
+						
+						switch (op) {
+						case "loginServidor":
+							
+							sl.LoginServidor((String)data.get("login"), (String)data.get("senha"), (String)data.get("ip"), (String)data.get("porta"));
+							valor = "true";
+							break;
+							
+						case "atualizarPanfleto":
+							
+							sl.AtualizarPanfleto((List)data.get("panfletos"));
+							valor = "true";
+							break;
+							
+						case "retornarPanfletos":
+							
+							JSONArray jsonArray = new JSONArray();
+							
+							List<Panfleto> panfletos = sl.RetornarPanfletos();
+							for (int i = 0; i < panfletos.size(); i++) {
+								JSONObject obj = new JSONObject();
+								obj.put("titulo", panfletos.get(i).getTitulo());
+								obj.put("texto", panfletos.get(i).getTexto());
+								jsonArray.add(obj);
+								
+							}
+							valor = jsonArray.toJSONString();
+							break;
+							
+							
+						default:
+							valor = "operacao desconhecida";
+						}
+						
+						
+					
+					//ServidorLoja servico = new ServidorLoja();
 					
 					//monta json
+					
+					JSONObject response = new JSONObject();
+					response.put("result",valor);
+					
+					String mOut = response.toJSONString();
+					
 					return mOut;
 				}
 			};

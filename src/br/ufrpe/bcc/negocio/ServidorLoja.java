@@ -8,6 +8,8 @@ import br.ufrpe.bcc.middleware.interfaces.IServidorLoja;
 public class ServidorLoja implements IServidorLoja{
 	
 	List<Panfleto> panfletos;
+	Usuario usuario;
+	Endereco endereco;
 	
 	public ServidorLoja() {
 		this.panfletos = new ArrayList<Panfleto>();
@@ -18,8 +20,8 @@ public class ServidorLoja implements IServidorLoja{
 			String port) {
 		List<Usuario> consultaUsuarios = new ArrayList<Usuario>();
 		
-		Usuario usuario = new Usuario(login,senha);
-		Endereco endereco = new Endereco(ip,port);//duvida
+		usuario = new Usuario(login,senha);
+		endereco = new Endereco(ip,port);//duvida
 		
 		for(Usuario user : consultaUsuarios){
 			if(user.getLogin().equals(usuario.getLogin()) &&
@@ -30,15 +32,10 @@ public class ServidorLoja implements IServidorLoja{
 		return false;
 	}
 
-	@Override
-	public boolean Logout(String login, String senha) {
-		//duvida
-		return false;
-	}
 
 	@Override
 	public List<Panfleto> RetornarPanfletos() {
-		//duvida
+		
 		return this.panfletos;
 	}
 
@@ -47,6 +44,30 @@ public class ServidorLoja implements IServidorLoja{
 		this.panfletos = panfletos;
 		return true;
 	}
+	
 
+	public List<Panfleto> getPanfletos() {
+		return panfletos;
+	}
+
+	public void setPanfletos(List<Panfleto> panfletos) {
+		this.panfletos = panfletos;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 	
 }
