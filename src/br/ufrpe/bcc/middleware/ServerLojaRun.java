@@ -28,7 +28,7 @@ public class ServerLojaRun {
 
 		ServidorNomes sn = new ServidorNomes();
 
-		Comm mCliente = new Comm(new Endereco("localhost", "5000"));
+		Comm mCliente = new Comm(new Endereco("localhost", "9999"));
 		Comm mServidor = new Comm(rs);
 
 		JSONObject response = new JSONObject();

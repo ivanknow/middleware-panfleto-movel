@@ -1,11 +1,15 @@
 package br.ufrpe.bcc.middleware;
 
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.StringWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import br.ufrpe.bcc.negocio.Endereco;
+import sun.misc.IOUtils;
 
 
 public class Comm {
@@ -25,15 +29,17 @@ public class Comm {
 
 		Socket clientSocket = null;
 		clientSocket = new Socket(host, port);
-		ObjectOutputStream outToServer;
-		outToServer = new ObjectOutputStream(clientSocket.getOutputStream());
+		OutputStream outToServer;
+		outToServer =	clientSocket.getOutputStream();
 	
-		outToServer.writeObject(m);
+		outToServer.write(m.getBytes());
 	
 		String retorno = null;
-		ObjectInputStream inFromClient; 
-		inFromClient = new ObjectInputStream(clientSocket.getInputStream());
-		retorno= (String) inFromClient.readObject();
+		InputStream inFromClient; 
+		inFromClient = clientSocket.getInputStream();
+		
+		retorno = new String(IOUtils.readFully(inFromClient, 0, true));
+		
 		clientSocket.close();
 
 		return retorno;

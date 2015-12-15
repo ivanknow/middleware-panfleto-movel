@@ -17,7 +17,7 @@ import br.ufrpe.bcc.negocio.ServidorNomes;
 public class ServerNomeRun {
 	public static void main(String[] args) throws Exception {
 		
-		run("localhost","5000");
+		run("localhost","9999");
 	}
 	static ServidorNomes sn = new ServidorNomes();
 	public static void run(String host,String port) throws Exception{

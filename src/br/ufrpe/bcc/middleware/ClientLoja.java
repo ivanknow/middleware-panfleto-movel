@@ -20,7 +20,7 @@ public class ClientLoja {
 
 		
 
-		Comm mCliente = new Comm(new Endereco("localhost", "5000"));
+		Comm mCliente = new Comm(new Endereco("localhost", "9999"));
 		
 		JSONObject response = new JSONObject();
 		response.put("op","retornarNomesServicos");
