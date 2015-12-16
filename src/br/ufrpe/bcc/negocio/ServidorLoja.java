@@ -12,7 +12,7 @@ public class ServidorLoja implements IServidorLoja{
 	Endereco endereco;
 	
 	public ServidorLoja() {
-		this.panfletos = new ArrayList<Panfleto>();
+		
 	}
 	
 	@Override
@@ -34,8 +34,7 @@ public class ServidorLoja implements IServidorLoja{
 
 	@Override
 	public List<Panfleto> RetornarPanfletos() {
-		
-		return this.panfletos;
+		return panfletos;
 	}
 
 	@Override

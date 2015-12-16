@@ -1,5 +1,6 @@
 package br.ufrpe.bcc.middleware;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ public class ServerLojaRun {
 		//passa valores no json
 
 		System.out.println(mCliente.requestAndReceive(request.toJSONString()));
+		ServidorLoja sl = new ServidorLoja();
 
 		while (true) {
 			MiddlewareThread thread = new MiddlewareThread(mServidor.receiveThread()) {
@@ -59,7 +61,6 @@ public class ServerLojaRun {
 						String op = (String) json.get("op");
 						System.out.println();
 						
-						ServidorLoja sl = new ServidorLoja();
 						
 						String valor = "";
 						LinkedHashMap data = (LinkedHashMap) json.get("data");
@@ -73,7 +74,14 @@ public class ServerLojaRun {
 						case "atualizarPanfleto":
 							
 							System.out.println(parser.parse((String) data.get("panfletos")));
-							List lista = (List) parser.parse((String) data.get("panfletos"));
+							JSONArray ba = (JSONArray) parser.parse((String) data.get("panfletos"));
+							List<Panfleto> lista = new ArrayList<Panfleto>();
+							for(int i = 0;i<ba.size();i++){
+								JSONObject o = (JSONObject) ba.get(i);	
+								Panfleto p = new Panfleto((String)o.get("titulo"),(String) o.get("texto"),(String) o.get("link"),(Double) o.get("preco"));
+								lista.add(p);
+							}
+							
 							sl.AtualizarPanfleto(lista);
 							valor = "true";
 							break;
@@ -83,14 +91,16 @@ public class ServerLojaRun {
 							JSONArray jsonArray = new JSONArray();
 							
 							List<Panfleto> panfletos = sl.RetornarPanfletos();
-							for (int i = 0; i < panfletos.size(); i++) {
+							for(Panfleto p:panfletos){
 								JSONObject obj = new JSONObject();
-								obj.put("titulo", panfletos.get(i).getTitulo());
-								System.out.println(obj.put("titulo", panfletos.get(i).getTitulo()));
-								obj.put("texto", panfletos.get(i).getTexto());
+								obj.put("titulo", p.getTitulo());
+								
+								obj.put("texto", p.getTexto());
 								jsonArray.add(obj);
 								
 							}
+								
+							
 							valor = jsonArray.toJSONString();
 							break;
 							
