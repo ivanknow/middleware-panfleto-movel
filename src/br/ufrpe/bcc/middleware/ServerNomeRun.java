@@ -27,6 +27,7 @@ public class ServerNomeRun {
 		Comm m = new Comm(new Endereco(host, port));
 
 		while (true) {
+			System.out.println("Server Nome");
 			MiddlewareThread thread = new MiddlewareThread(m.receiveThread()) {
 				
 				@Override

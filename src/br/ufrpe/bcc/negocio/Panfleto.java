@@ -6,9 +6,9 @@ public class Panfleto {
 	private String titulo;
 	private String texto;
 	private String link;
-	private BigDecimal preco;
+	private Double preco;
 	
-	public Panfleto(String titulo, String texto, String link, BigDecimal preco) {
+	public Panfleto(String titulo, String texto, String link, Double preco) {
 		this.titulo = titulo;
 		this.texto = texto;
 		this.link = link;
@@ -39,12 +39,18 @@ public class Panfleto {
 		this.link = link;
 	}
 	
-	public BigDecimal getPreco() {
+	public Double getPreco() {
 		return preco;
 	}
 
-	public void setPreco(BigDecimal preco) {
+	public void setPreco(Double preco) {
 		this.preco = preco;
 	}
 
+	@Override
+	public String toString() {
+		return "Panfleto [titulo=" + titulo + ", texto=" + texto + ", link="
+				+ link + ", preco=" + preco + "]";
+	}
+ 
 }

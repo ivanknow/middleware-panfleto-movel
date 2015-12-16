@@ -8,7 +8,7 @@ import br.ufrpe.bcc.middleware.interfaces.IServidorLoja;
 public class ServidorLoja implements IServidorLoja{
 	
 	List<Panfleto> panfletos;
-	Usuario usuario;
+	Usuario usuario = new Usuario("admin","1234");
 	Endereco endereco;
 	
 	public ServidorLoja() {
@@ -20,15 +20,14 @@ public class ServidorLoja implements IServidorLoja{
 			String port) {
 		List<Usuario> consultaUsuarios = new ArrayList<Usuario>();
 		
-		usuario = new Usuario(login,senha);
+		Usuario user = new Usuario(login,senha);
 		endereco = new Endereco(ip,port);//duvida
 		
-		for(Usuario user : consultaUsuarios){
 			if(user.getLogin().equals(usuario.getLogin()) &&
 					user.getSenha().equals(usuario.getSenha())){
 				return true;
 			}
-		}
+		
 		return false;
 	}
 
@@ -41,6 +40,7 @@ public class ServidorLoja implements IServidorLoja{
 
 	@Override
 	public boolean AtualizarPanfleto(List<Panfleto> panfletos) {
+		System.out.println("As ofertas são: " + panfletos);
 		this.panfletos = panfletos;
 		return true;
 	}

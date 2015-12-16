@@ -1,5 +1,6 @@
 package br.ufrpe.bcc.middleware;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,27 +32,27 @@ public class ServerLojaRun {
 		Comm mCliente = new Comm(new Endereco("localhost", "5000"));
 		Comm mServidor = new Comm(rs);
 
-		JSONObject response = new JSONObject();
-		response.put("op","cadastrarLoja");
+		JSONObject request = new JSONObject();
+		request.put("op","cadastrarLoja");
 		JSONObject data = new JSONObject();
 		data.put("ip","localhost");
-		data.put("porta", "5001");
+		data.put("porta", "5551");
 		//data.put("identificador","");
 		data.put("nomeServico","cea");
 		data.put("login","cea");
 		data.put("senha","1234");
-		response.put("data",data);
+		request.put("data",data);
 
 		//passa valores no json
 
-		mCliente.requestAndReceive(response.toJSONString());
+		System.out.println(mCliente.requestAndReceive(request.toJSONString()));
 
 		while (true) {
 			MiddlewareThread thread = new MiddlewareThread(mServidor.receiveThread()) {
 
 				@Override
 				public String exec(String m) throws ParseException{
-					
+					System.out.println("Server Loja");
 					JSONParser parser = new JSONParser();
 					
 						Map json = (Map)parser.parse(m, new JsonConteiner());
@@ -61,17 +62,19 @@ public class ServerLojaRun {
 						ServidorLoja sl = new ServidorLoja();
 						
 						String valor = "";
-						
+						LinkedHashMap data = (LinkedHashMap) json.get("data");
 						switch (op) {
 						case "loginServidor":
 							
-							sl.LoginServidor((String)data.get("login"), (String)data.get("senha"), (String)data.get("ip"), (String)data.get("porta"));
-							valor = "true";
+							boolean b = sl.LoginServidor((String)data.get("login"), (String)data.get("senha"), (String)data.get("ip"), (String)data.get("porta"));
+							valor = ""+b;
 							break;
 							
 						case "atualizarPanfleto":
 							
-							sl.AtualizarPanfleto((List)data.get("panfletos"));
+							System.out.println(parser.parse((String) data.get("panfletos")));
+							List lista = (List) parser.parse((String) data.get("panfletos"));
+							sl.AtualizarPanfleto(lista);
 							valor = "true";
 							break;
 							
@@ -83,6 +86,7 @@ public class ServerLojaRun {
 							for (int i = 0; i < panfletos.size(); i++) {
 								JSONObject obj = new JSONObject();
 								obj.put("titulo", panfletos.get(i).getTitulo());
+								System.out.println(obj.put("titulo", panfletos.get(i).getTitulo()));
 								obj.put("texto", panfletos.get(i).getTexto());
 								jsonArray.add(obj);
 								
